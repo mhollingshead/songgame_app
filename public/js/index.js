@@ -3,7 +3,7 @@ var game;
 var sips;
 
 //socket = io.connect('http://localhost:3000');
-socket = io();
+socket = io.connect('/');
 
 function hostGame(name) {
   if (document.getElementById("host_name").value === "") {

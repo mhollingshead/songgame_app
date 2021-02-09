@@ -1,16 +1,11 @@
-/*var express = require('express');
+var express = require('express');
 var socket = require('socket.io');
 var app = express();
 app.set('port', (process.env.PORT || 5000));
-var server = app.listen(app.get('port'));
-var io = socket(server);*/
-
-var express = require('express'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
-
-server.listen(process.env.PORT || 3000);
+var server = app.listen(app.get('port'), function() {
+    console.log('Node app is running on port', app.get('port'));
+});
+var io = socket(server);
 
 var rooms = [];
 
