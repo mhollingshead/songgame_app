@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <title>songgame</title>
+</head>
+<body>
+  <div id="content" align="center">
+    <div class="section" id="logo_section">
+      <div class="logo" onclick="location.reload()">
+        songgame
+      </div>
+    </div>
+    <div class="slide" id="s1">
+      <div class="section box" align="center">
+        <div class="header">
+          Join a Game
+        </div>
+        <input type="text" placeholder="Screen Name" id="player_name"/>
+        <input type="text" placeholder="Room Code" id="room_code"/><br/>
+        <button class="confirm" onclick="joinGame(document.getElementById('room_code').value, document.getElementById('player_name').value)">Join Room</button>
+        <div class="spacer"></div>
+        <div class="header">
+          Host a Game
+        </div>
+        <input type="text" placeholder="Screen Name" id="host_name"/>
+        <button class="confirm" onclick="hostGame(document.getElementById('host_name').value)">Create New Game</button>
+        <h3></h3>
+      </div>
+    </div>
+    <div class="slide hidden" id="s2">
+      <div class="section box">
+        <div id="show_code">Room Code: <div id="code_area"></div></div>
+        <div class="spacer"></div>
+        <div class="header" align="left">
+          Players
+        </div>
+        <div id="lobby"></div>
+        <button class="confirm" onclick="startGame()" id="start_game_button">Start Game</button>
+        <div class="message">
+          <i>Waiting for <span id="waiting_for"></span> to start the game...</i>
+        </div>
+      </div>
+    </div>
+    <div class="slide hidden">
+      <div class="section">
+        <div class="logo">
+          Round <span id="round">1</span>
+        </div>
+      </div>
+      <div class="section box" id="choose_song">
+        <div class="header" align="left">
+          Select Song
+        </div>
+        <input type="text" id="title" placeholder="Title" onkeyup="checkForStart()" autocomplete="off"/>
+        <span style="color: #ff4060;">*</span>
+        <input type="text" id="artist" placeholder="Artist" onkeyup="checkForStart()" autocomplete="off"/>
+        <span style="color: #ff4060;">*</span>
+        <div id="error">
+          <i>Song not found, try again!</i>
+        </div>
+        <div align="center" style="color: grey; font-weight: 200; font-size: 15px; border: none" class="spacer">
+          <i>Make sure both the title and artist are spelled correctly!</i>
+        </div>
+        <button onclick="scrapeLyrics()" id="select_song" class="noclick confirm">Confirm Song</button>
+      </div>
+      <div class="section box" id="await_choice">
+        <div class="message" style="font-size: 20px">
+          <div id="await_choice_name"></div> is choosing the song
+        </div>
+        <div class="spacer"></div>
+        <div class="header" align="left">
+          Scores
+        </div>
+        <table id="scoreboard" width="100%">
+          <tr style="border: none; background: white;">
+            <th width="75px">
+              Place
+            </th>
+            <th>
+              Player
+            </th>
+            <th width="75px">
+              Score
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="slide hidden">
+      <div class="section">
+        <table width="100%">
+          <tr>
+            <td width="75px">
+              <img class="artwork" />
+            </td>
+            <td width="425px">
+              <div class="title_text"></div>
+              <div class="artist_text"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+        <div class="section box" id="choose_difficulty">
+          <div class="header">
+            Select Difficulty
+          </div>
+          <div align="center" style="margin-bottom: 10px; margin-top: 10px">
+            <img onclick="changeDifficulty(0)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug" />
+            <img onclick="changeDifficulty(1)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug" />
+            <img onclick="changeDifficulty(2)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+            <img onclick="changeDifficulty(3)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+            <img onclick="changeDifficulty(4)" src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="50px" class="mug bw" />
+          </div>
+          <div id="sips" style="margin-bottom: 20px;"></div>
+          <div class="spacer"></div>
+          <div class="header">
+            Select Letter
+          </div>
+          <div align="center" id="letters" style="margin-top: 10px;"></div>
+          <div id="error1" style="color: #ff4060; display: none;" align="center">
+            <i>Select a letter to play!</i>
+          </div>
+          <div class="spacer" style="border: none"></div>
+          <button class="confirm" onclick="playGame()">Start Round</button>
+        </div>
+        <div class="section box" id="await_difficulty">
+          <div class="message" style="font-size: 20px">
+            <div id="await_difficulty_name"></div> is choosing the letter
+          </div>
+          <div class="spacer"></div>
+          <div class="header" align="left">
+            Scores
+          </div>
+          <table id="scoreboard1" width="100%">
+            <tr style="border: none; background: white;">
+              <th width="75px">
+                Place
+              </th>
+              <th>
+                Player
+              </th>
+              <th width="75px">
+                Score
+              </th>
+            </tr>
+          </table>
+        </div>
+    </div>
+    <div class="slide hidden">
+      <div class="section">
+        <table width="100%">
+          <tr>
+            <td width="75px">
+              <img class="artwork" />
+            </td>
+            <td width="425px">
+              <div class="title_text"></div>
+              <div class="artist_text"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div style="height: 20px;"></div>
+      <div class="section">
+        <button id="sip_button" onclick="sip()"><img src="https://image.flaticon.com/icons/svg/1816/1816189.svg" width="75px" /></button>
+      </div>
+      <div style="height: 20px;"></div>
+      <div class="section box">
+        Tap the button & drink when you hear the letter
+        <div style="display: inline-block; background: #f2f2f2; border-radius: 10px; padding: 10px; font-weight: 800;" id="letter_disp"></div>
+        <div class="spacer"></div>
+        <b style="font-size: 25px;">You've taken: <span id="sip_count">0</span> <span id="grammar">sips</span>.</b>
+        <div style="margin-top: 20px;">
+          <button class="confirm" onclick="endRound()" id="end_round_button">End Round</button>
+        </div>
+        <div style="margin-top: 20px; display: none; margin-bottom: 20px;" id="waiting_to_end">
+          <div class="message">
+            Waiting for players...
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide hidden">
+      <div class="section">
+        <table width="100%">
+          <tr>
+            <td width="75px">
+              <img class="artwork" />
+            </td>
+            <td width="425px">
+              <div class="title_text"></div>
+              <div class="artist_text"></div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="section box">
+        <b style="font-size: 25px; margin-bottom: 20px;">Your score:</b>
+        <div id="your_score"></div>
+        You were <b><span id="percent_off"></span></b> off. You took <b><span id="sipped"></span></b> out of <b><span id="real_sips"></span></b> sips.
+        <div class="spacer"></div>
+        <div class="header" align="left">
+          Round Scores
+        </div>
+        <table id="round_board" width="100%">
+          <tr style="border: none; background: white;">
+            <th>
+              Player
+            </th>
+            <th width="75px">
+              Sips
+            </th>
+            <th width="75px">
+              Points
+            </th>
+          </tr>
+        </table>
+        <div style="margin-top: 20px;">
+          <button class="confirm" onclick="nextRound()" id="final_end_round_button" style="display: none;">Next Round</button>
+        </div>
+        <div class="message" style="margin-top: 20px; margin-bottom: 20px;" id="waiting_for_round">
+          <i>Waiting for <span id="wait_for_round"></span> to continue...</i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/slides.js"></script>
+  <script src="js/scrape.js"></script>
+  <script src="js/helpers.js"></script>
+</body>
+</html>
