@@ -73,7 +73,7 @@ function formatLyrics(data) {
     }
     if (checkPhrase(i, 'img src="')) {
       i+=9;
-      if (checkPhrase(i, "http://netstorage.metrolyrics.com/albums")) {
+      if (checkPhrase(i, "://netstorage.metrolyrics.com/albums")) {
         while (!checkPhrase(i, '"')) {
           artwork += data_obj[i];
           i++
